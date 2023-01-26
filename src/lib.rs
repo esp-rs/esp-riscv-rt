@@ -18,6 +18,7 @@
 
 use core::arch::global_asm;
 
+pub use riscv;
 use riscv::register::{
     mcause,
     mhartid,
