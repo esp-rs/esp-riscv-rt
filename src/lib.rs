@@ -483,7 +483,7 @@ _vector_table:
     .option push
     .option norvc
     .rept 31
-    j default_start_trap
+    j _start_trap
     .endr
 
 "#
