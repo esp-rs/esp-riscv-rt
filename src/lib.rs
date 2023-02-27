@@ -482,6 +482,7 @@ abort:
 _vector_table:
     .option push
     .option norvc
+    j _start_trap
     .rept 31
     j _start_trap
     .endr
