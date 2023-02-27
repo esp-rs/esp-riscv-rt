@@ -474,18 +474,20 @@ abort:
 */
 
 .section .trap, "ax"
-.balign 0x100
 .global _vector_table
 .type _vector_table, @function
+
+.option push
+.balign 0x100
 .option norelax
+.option norvc
 
 _vector_table:
-    .option push
-    .option norvc
     j _start_trap
     .rept 31
     j _start_trap
     .endr
 
+.option pop
 "#
 );
