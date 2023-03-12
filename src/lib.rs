@@ -34,12 +34,12 @@ pub static __ONCE__: () = ();
 
 extern "C" {
     // Boundaries of the .bss section
-    static mut _ebss: u32;
-    static mut _sbss: u32;
+    static mut _bss_start: u32;
+    static mut _bss_end: u32;
 
     // Boundaries of the .data section
-    static mut _edata: u32;
-    static mut _sdata: u32;
+    static mut _data_start: u32;
+    static mut _data_end: u32;
 
     // Initial values of the .data section (stored in Flash)
     static _sidata: u32;
@@ -70,8 +70,8 @@ pub unsafe extern "C" fn start_rust(a0: usize, a1: usize, a2: usize) -> ! {
     if _mp_hook(hartid) {
         __pre_init();
 
-        r0::zero_bss(&mut _sbss, &mut _ebss);
-        r0::init_data(&mut _sdata, &mut _edata, &_sidata);
+        r0::zero_bss(&mut _bss_start, &mut _bss_end);
+        r0::init_data(&mut _data_start, &mut _data_end, &_sidata);
     }
 
     _setup_interrupts();
