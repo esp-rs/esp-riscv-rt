@@ -244,9 +244,27 @@ pub unsafe extern "Rust" fn default_setup_interrupts() {
     mtvec::write(_start_trap as usize, TrapMode::Direct);
 }
 
-global_asm!(
-    r#"
+/// Parse cfg attributes inside a global_asm call.
+macro_rules! cfg_global_asm {
+    {@inner, [$($x:tt)*], } => {
+        global_asm!{$($x)*}
+    };
+    (@inner, [$($x:tt)*], #[cfg($meta:meta)] $asm:literal, $($rest:tt)*) => {
+        #[cfg($meta)]
+        cfg_global_asm!{@inner, [$($x)* $asm,], $($rest)*}
+        #[cfg(not($meta))]
+        cfg_global_asm!{@inner, [$($x)*], $($rest)*}
+    };
+    {@inner, [$($x:tt)*], $asm:literal, $($rest:tt)*} => {
+        cfg_global_asm!{@inner, [$($x)* $asm,], $($rest)*}
+    };
+    {$($asms:tt)*} => {
+        cfg_global_asm!{@inner, [], $($asms)*}
+    };
+}
 
+cfg_global_asm! {
+    r#"
 /*
     Entry point of all programs (_start).
 
@@ -267,17 +285,13 @@ _abs_start:
     .option norelax
     .cfi_startproc
     .cfi_undefined ra
-"#
-);
+"#,
 #[cfg(feature = "has-mie-mip")]
-global_asm!(
     r#"
     csrw mie, 0
     csrw mip, 0
-"#
-);
+"#,
 #[cfg(feature = "zero-bss")]
-global_asm!(
     r#"
     la a0, _sbss
     la a1, _ebss
@@ -286,10 +300,8 @@ global_asm!(
     sw a3, 0(a0)
     addi a0, a0, 4
     blt a0, a1, 1b
-"#
-);
+"#,
 #[cfg(feature = "zero-rtc-fast-bss")]
-global_asm!(
     r#"
     la a0, _rtc_fast_bss_start
     la a1, _rtc_fast_bss_end
@@ -298,10 +310,8 @@ global_asm!(
     sw a3, 0(a0)
     addi a0, a0, 4
     blt a0, a1, 1b
-"#
-);
+"#,
 #[cfg(feature = "init-data")]
-global_asm!(
     r#"
     la a0, _sdata
     la a1, _edata
@@ -312,10 +322,8 @@ global_asm!(
     addi a0, a0, 4
     addi a2, a2, 4
     blt a0, a1, 1b
-"#
-);
+"#,
 #[cfg(feature = "init-rw-text")]
-global_asm!(
     r#"
     la a0, _srwtext
     la a1, _erwtext
@@ -326,10 +334,8 @@ global_asm!(
     addi a0, a0, 4
     addi a2, a2, 4
     blt a0, a1, 1b
-"#
-);
+"#,
 #[cfg(feature = "init-rtc-fast-data")]
-global_asm!(
     r#"
     la a0, _rtc_fast_data_start
     la a1, _rtc_fast_data_end
@@ -340,10 +346,8 @@ global_asm!(
     addi a0, a0, 4
     addi a2, a2, 4
     blt a0, a1, 1b
-"#
-);
+"#,
 #[cfg(feature = "init-rtc-fast-text")]
-global_asm!(
     r#"
     la a0, _srtc_fast_text
     la a1, _ertc_fast_text
@@ -354,9 +358,7 @@ global_asm!(
     addi a0, a0, 4
     addi a2, a2, 4
     blt a0, a1, 1b
-"#
-);
-global_asm!(
+"#,
     r#"
     li  x1, 0
     li  x2, 0
@@ -547,5 +549,5 @@ _vector_table:
     .endr
 
 .option pop
-"#
-);
+"#,
+}
