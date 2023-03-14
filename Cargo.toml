@@ -10,9 +10,17 @@ keywords     = ["esp32", "riscv", "runtime", "startup"]
 categories   = ["embedded", "no-std"]
 
 [dependencies]
-r0              = "1.0.0"
 riscv           = "0.10.1"
 riscv-rt-macros = "0.2.0"
 
 [dev-dependencies]
 panic-halt = "0.2.0"
+
+[features]
+has-mie-mip = []
+zero-bss = []
+zero-rtc-fast-bss = []
+init-data = []
+init-rw-text = []
+init-rtc-fast-data = []
+init-rtc-fast-text = []
