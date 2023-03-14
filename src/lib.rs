@@ -9,9 +9,9 @@
 //!
 //! This crate provides:
 //!
-//! - Before main initialization of the `.bss` and `.data` sections
+//! - Before main initialization of the `.bss` and `.data` sections controlled
+//!   by features
 //! - `#[entry]` to declare the entry point of the program
-//! - `#[pre_init]` to run code *before* `static` variables are initialized
 
 // NOTE: Adapted from riscv-rt/src/lib.rs
 #![no_std]
@@ -21,7 +21,6 @@ use core::arch::global_asm;
 pub use riscv;
 use riscv::register::{
     mcause,
-    mhartid,
     mtvec::{self, TrapMode},
 };
 pub use riscv_rt_macros::{entry, pre_init};
@@ -56,23 +55,13 @@ pub unsafe extern "C" fn start_rust(a0: usize, a1: usize, a2: usize) -> ! {
         // This symbol will be provided by the user via `#[entry]`
         fn main(a0: usize, a1: usize, a2: usize) -> !;
 
-        // This symbol will be provided by the user via `#[pre_init]`
-        fn __pre_init();
+        fn __post_init();
 
         fn _setup_interrupts();
 
-        fn _mp_hook(hartid: usize) -> bool;
     }
 
-    // sbi passes hartid as first parameter (a0)
-    let hartid = mhartid::read();
-
-    if _mp_hook(hartid) {
-        __pre_init();
-
-        r0::zero_bss(&mut _sbss, &mut _ebss);
-        r0::init_data(&mut _sdata, &mut _edata, &_sidata);
-    }
+    __post_init();
 
     _setup_interrupts();
 
@@ -240,19 +229,7 @@ pub static __INTERRUPTS: [Vector; 12] = [
 #[doc(hidden)]
 #[no_mangle]
 #[rustfmt::skip]
-pub unsafe extern "Rust" fn default_pre_init() {}
-
-#[doc(hidden)]
-#[no_mangle]
-#[rustfmt::skip]
-pub extern "Rust" fn default_mp_hook(hartid: usize) -> bool {
-    match hartid {
-        0 => true,
-        _ => loop {
-            unsafe { riscv::asm::wfi() }
-        },
-    }
-}
+pub unsafe extern "Rust" fn default_post_init() {}
 
 /// Default implementation of `_setup_interrupts` that sets `mtvec`/`stvec` to a
 /// trap handler address.
@@ -267,9 +244,27 @@ pub unsafe extern "Rust" fn default_setup_interrupts() {
     mtvec::write(_start_trap as usize, TrapMode::Direct);
 }
 
-global_asm!(
-    r#"
+/// Parse cfg attributes inside a global_asm call.
+macro_rules! cfg_global_asm {
+    {@inner, [$($x:tt)*], } => {
+        global_asm!{$($x)*}
+    };
+    (@inner, [$($x:tt)*], #[cfg($meta:meta)] $asm:literal, $($rest:tt)*) => {
+        #[cfg($meta)]
+        cfg_global_asm!{@inner, [$($x)* $asm,], $($rest)*}
+        #[cfg(not($meta))]
+        cfg_global_asm!{@inner, [$($x)*], $($rest)*}
+    };
+    {@inner, [$($x:tt)*], $asm:literal, $($rest:tt)*} => {
+        cfg_global_asm!{@inner, [$($x)* $asm,], $($rest)*}
+    };
+    {$($asms:tt)*} => {
+        cfg_global_asm!{@inner, [], $($asms)*}
+    };
+}
 
+cfg_global_asm! {
+    r#"
 /*
     Entry point of all programs (_start).
 
@@ -286,17 +281,85 @@ _start:
     lui ra, %hi(_abs_start)
     jr %lo(_abs_start)(ra)
 
-// .section .text
-
 _abs_start:
     .option norelax
     .cfi_startproc
     .cfi_undefined ra
-
-    // Unsupported on ESP32-C2/C3
-    // csrw mie, 0
-    // csrw mip, 0
-
+"#,
+#[cfg(feature = "has-mie-mip")]
+    r#"
+    csrw mie, 0
+    csrw mip, 0
+"#,
+#[cfg(feature = "zero-bss")]
+    r#"
+    la a0, _sbss
+    la a1, _ebss
+    mv a3, x0
+    1:
+    sw a3, 0(a0)
+    addi a0, a0, 4
+    blt a0, a1, 1b
+"#,
+#[cfg(feature = "zero-rtc-fast-bss")]
+    r#"
+    la a0, _rtc_fast_bss_start
+    la a1, _rtc_fast_bss_end
+    mv a3, x0
+    1:
+    sw a3, 0(a0)
+    addi a0, a0, 4
+    blt a0, a1, 1b
+"#,
+#[cfg(feature = "init-data")]
+    r#"
+    la a0, _sdata
+    la a1, _edata
+    la a2, _sidata
+    1:
+    lw a3, 0(a2)
+    sw a3, 0(a0)
+    addi a0, a0, 4
+    addi a2, a2, 4
+    blt a0, a1, 1b
+"#,
+#[cfg(feature = "init-rw-text")]
+    r#"
+    la a0, _srwtext
+    la a1, _erwtext
+    la a2, _irwtext
+    1:
+    lw a3, 0(a2)
+    sw a3, 0(a0)
+    addi a0, a0, 4
+    addi a2, a2, 4
+    blt a0, a1, 1b
+"#,
+#[cfg(feature = "init-rtc-fast-data")]
+    r#"
+    la a0, _rtc_fast_data_start
+    la a1, _rtc_fast_data_end
+    la a2, _irtc_fast_data
+    1:
+    lw a3, 0(a2)
+    sw a3, 0(a0)
+    addi a0, a0, 4
+    addi a2, a2, 4
+    blt a0, a1, 1b
+"#,
+#[cfg(feature = "init-rtc-fast-text")]
+    r#"
+    la a0, _srtc_fast_text
+    la a1, _ertc_fast_text
+    la a2, _irtc_fast_text
+    1:
+    lw a3, 0(a2)
+    sw a3, 0(a0)
+    addi a0, a0, 4
+    addi a2, a2, 4
+    blt a0, a1, 1b
+"#,
+    r#"
     li  x1, 0
     li  x2, 0
     li  x3, 0
@@ -370,9 +433,6 @@ _abs_start:
 */
 .section .trap, "ax"
 .global default_start_trap
-
-// .option norelax
-// .align 6
 
 default_start_trap:
     addi sp, sp, -40*4
@@ -489,5 +549,5 @@ _vector_table:
     .endr
 
 .option pop
-"#
-);
+"#,
+}
