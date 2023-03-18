@@ -20,11 +20,13 @@ use core::arch::global_asm;
 
 pub use riscv;
 use riscv::register::{
+    mstatus,
     mcause,
     mhartid,
     mtvec::{self, TrapMode},
 };
 pub use riscv_rt_macros::{entry, pre_init};
+
 
 pub use self::Interrupt as interrupt;
 
@@ -136,7 +138,6 @@ pub unsafe extern "C" fn start_trap_rust(trap_frame: *const TrapFrame) {
 
     unsafe {
         let cause = mcause::read();
-
         if cause.is_exception() {
             ExceptionHandler(&*trap_frame)
         } else if cause.code() < __INTERRUPTS.len() {
@@ -144,6 +145,7 @@ pub unsafe extern "C" fn start_trap_rust(trap_frame: *const TrapFrame) {
             if h.reserved == 0 {
                 DefaultHandler();
             } else {
+                mstatus::set_mie();
                 (h.handler)();
             }
         } else {
@@ -375,9 +377,8 @@ _abs_start:
 // .align 6
 
 default_start_trap:
-    addi sp, sp, -40*4
 
-    sw ra, 0*4(sp)
+
     sw t0, 1*4(sp)
     sw t1, 2*4(sp)
     sw t2, 3*4(sp)
@@ -415,19 +416,27 @@ default_start_trap:
     sw t1, 33*4(sp)
     csrrs t1, mtval, x0
     sw t1, 34*4(sp)
-
     addi s0, sp, 40*4
     sw s0, 30*4(sp)
-
     add a0, sp, zero
-    jal ra, _start_trap_rust_hal
+
+    /* move ra to callee preserved register */
+    add s0, ra, zero
+
+    jal ra, set_prio
+    sw a0, 35*4(sp)
+    /* returned old prio */
+
+    jalr ra, s0
+
+    lw a0, 35*4(sp) 
+    /* load stacked interrupt id so we may restore it*/
+    jal ra, restore_prio
 
     lw t1, 31*4(sp)
     csrrw x0, mepc, t1
-
     lw t1, 32*4(sp)
     csrrw x0, mstatus, t1
-
     lw ra, 0*4(sp)
     lw t0, 1*4(sp)
     lw t1, 2*4(sp)
@@ -459,7 +468,6 @@ default_start_trap:
     lw gp, 28*4(sp)
     lw tp, 29*4(sp)
     lw sp, 30*4(sp)
-
     # SP was restored from the original SP
     mret
 
@@ -483,11 +491,76 @@ abort:
 .option norvc
 
 _vector_table:
-    j _start_trap
-    .rept 31
-    j _start_trap
+    .rept 21
+    j _default_handler
     .endr
-
+    j _handler_21
+    j _handler_22
+    j _handler_23
+    j _handler_24
+    .rept 7
+    j _default_handler
+    .endr
 .option pop
+
+_handler_21:
+    addi sp, sp, -40*4
+    sw ra, 0*4(sp)
+    jal ra, _start_trap
+    /*push context to stack*/
+    add s2 , ra, zero 
+    jal ra, int_21
+    /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
+    jr s2, 0
+    /*de-stack context*/
+
+_handler_22:
+    
+    addi sp, sp, -40*4
+    sw ra, 0*4(sp)
+    jal ra, _start_trap
+    /*push context to stack*/
+    add s2 , ra, zero 
+    jal ra, int_22
+    /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
+    jr s2, 0
+    /*de-stack context*/
+
+_handler_23:
+    
+    addi sp, sp, -40*4
+    sw ra, 0*4(sp)
+    jal ra, _start_trap
+    /*push context to stack*/
+    add s2 , ra, zero 
+    jal ra, int_23
+    /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
+    jr s2, 0
+    /*de-stack context*/
+
+_handler_24:
+    
+    addi sp, sp, -40*4
+    sw ra, 0*4(sp)
+    jal ra, _start_trap
+    /*push context to stack*/
+    add s2 , ra, zero 
+    jal ra, int_24
+    /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
+    jr s2, 0
+    /*de-stack context*/
+
+
+
+    
+_default_handler:
+    addi sp, sp, -40*4
+    sw ra, 0*4(sp)
+    jal ra, _start_trap
+    add s2, ra, zero  
+    /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
+    jal ra, _start_trap_rust_hal
+    jr s2, 0
 "#
+
 );
