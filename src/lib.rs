@@ -33,12 +33,12 @@ pub static __ONCE__: () = ();
 
 extern "C" {
     // Boundaries of the .bss section
-    static mut _ebss: u32;
-    static mut _sbss: u32;
+    static mut _bss_end: u32;
+    static mut _bss_start: u32;
 
     // Boundaries of the .data section
-    static mut _edata: u32;
-    static mut _sdata: u32;
+    static mut _data_end: u32;
+    static mut _data_start: u32;
 
     // Initial values of the .data section (stored in Flash)
     static _sidata: u32;
@@ -293,8 +293,8 @@ _abs_start:
 "#,
 #[cfg(feature = "zero-bss")]
     r#"
-    la a0, _sbss
-    la a1, _ebss
+    la a0, _bss_start
+    la a1, _bss_end
     mv a3, x0
     1:
     sw a3, 0(a0)
@@ -313,8 +313,8 @@ _abs_start:
 "#,
 #[cfg(feature = "init-data")]
     r#"
-    la a0, _sdata
-    la a1, _edata
+    la a0, _data_start
+    la a1, _data_end
     la a2, _sidata
     1:
     lw a3, 0(a2)
