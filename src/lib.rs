@@ -377,8 +377,8 @@ _abs_start:
 // .align 6
 
 default_start_trap:
-
-
+    addi sp, sp, -40*4
+    sw ra, 0*4(sp)
     sw t0, 1*4(sp)
     sw t1, 2*4(sp)
     sw t2, 3*4(sp)
@@ -418,19 +418,18 @@ default_start_trap:
     sw t1, 34*4(sp)
     addi s0, sp, 40*4
     sw s0, 30*4(sp)
+    
+    jal ra, set_prio
+    /* returned old prio, stack it*/
+    sw a0, 35*4(sp)
+    
     add a0, sp, zero
 
-    /* move ra to callee preserved register */
-    add s0, ra, zero
+    jal ra, _start_trap_rust_hal
 
-    jal ra, set_prio
-    sw a0, 35*4(sp)
-    /* returned old prio */
-
-    jalr ra, s0
-
-    lw a0, 35*4(sp) 
     /* load stacked interrupt id so we may restore it*/
+    lw a0, 35*4(sp) 
+    
     jal ra, restore_prio
 
     lw t1, 31*4(sp)
@@ -491,20 +490,12 @@ abort:
 .option norvc
 
 _vector_table:
-    .rept 32
-    j _default_handler
+    j _start_trap
+    .rept 31
+    j _start_trap
     .endr
-.option pop
 
-  
-_default_handler:
-    addi sp, sp, -40*4
-    sw ra, 0*4(sp)
-    jal ra, _start_trap
-    add s2, ra, zero  
-    /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
-    jal ra, _start_trap_rust_hal
-    jr s2, 0
+.option pop
 "#
 
 );
