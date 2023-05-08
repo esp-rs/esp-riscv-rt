@@ -435,9 +435,8 @@ _abs_start:
 .global default_start_trap
 
 default_start_trap:
-    addi sp, sp, -40*4
 
-    sw ra, 0*4(sp)
+
     sw t0, 1*4(sp)
     sw t1, 2*4(sp)
     sw t2, 3*4(sp)
@@ -475,19 +474,22 @@ default_start_trap:
     sw t1, 33*4(sp)
     csrrs t1, mtval, x0
     sw t1, 34*4(sp)
-
     addi s0, sp, 40*4
     sw s0, 30*4(sp)
-
     add a0, sp, zero
-    jal ra, _start_trap_rust_hal
+
+    /* move ra to callee preserved register */
+    add s0, ra, zero
+
+
+    jalr ra, s0
+
+
 
     lw t1, 31*4(sp)
     csrrw x0, mepc, t1
-
     lw t1, 32*4(sp)
     csrrw x0, mstatus, t1
-
     lw ra, 0*4(sp)
     lw t0, 1*4(sp)
     lw t1, 2*4(sp)
@@ -519,7 +521,6 @@ default_start_trap:
     lw gp, 28*4(sp)
     lw tp, 29*4(sp)
     lw sp, 30*4(sp)
-
     # SP was restored from the original SP
     mret
 
@@ -543,11 +544,65 @@ abort:
 .option norvc
 
 _vector_table:
-    j _start_trap
-    .rept 31
-    j _start_trap
+    j _default_handler
+    j _default_handler
+    j _handler_22
+    j _handler_23
+    j _handler_24
+    .rept 21
+    j _default_handler
     .endr
-
+    .rept 5
+    j _default_handler
+    .endr
 .option pop
+
+_handler_22:
+    
+    addi sp, sp, -40*4
+    sw ra, 0*4(sp)
+    jal ra, _start_trap
+    /*push context to stack*/
+    add s2 , ra, zero 
+    jal ra, FROM_CPU_INTR0_handler
+    /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
+    jr s2, 0
+    /*de-stack context*/
+
+_handler_23:
+    
+    addi sp, sp, -40*4
+    sw ra, 0*4(sp)
+    jal ra, _start_trap
+    /*push context to stack*/
+    add s2 , ra, zero 
+    jal ra, FROM_CPU_INTR1_handler
+    /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
+    jr s2, 0
+    /*de-stack context*/
+
+_handler_24:
+    
+    addi sp, sp, -40*4
+    sw ra, 0*4(sp)
+    jal ra, _start_trap
+    /*push context to stack*/
+    add s2 , ra, zero 
+    jal ra, FROM_CPU_INTR2_handler
+    /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
+    jr s2, 0
+    /*de-stack context*/
+
+
+
+    
+_default_handler:
+    addi sp, sp, -40*4
+    sw ra, 0*4(sp)
+    jal ra, _start_trap
+    add s2, ra, zero  
+    /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
+    jal ra, _start_trap_rust_hal
+    jr s2, 0
 "#,
 }
