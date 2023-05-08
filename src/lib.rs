@@ -545,7 +545,7 @@ abort:
 
 _vector_table:
     j _default_handler
-    j _default_handler
+    j _handler_21
     j _handler_22
     j _handler_23
     j _handler_24
@@ -557,7 +557,7 @@ _vector_table:
     .endr
 .option pop
 
-_handler_22:
+_handler_21:
     
     addi sp, sp, -40*4
     sw ra, 0*4(sp)
@@ -569,7 +569,7 @@ _handler_22:
     jr s2, 0
     /*de-stack context*/
 
-_handler_23:
+_handler_22:
     
     addi sp, sp, -40*4
     sw ra, 0*4(sp)
@@ -581,7 +581,7 @@ _handler_23:
     jr s2, 0
     /*de-stack context*/
 
-_handler_24:
+_handler_23:
     
     addi sp, sp, -40*4
     sw ra, 0*4(sp)
@@ -589,6 +589,18 @@ _handler_24:
     /*push context to stack*/
     add s2 , ra, zero 
     jal ra, FROM_CPU_INTR2_handler
+    /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
+    jr s2, 0
+    /*de-stack context*/
+
+_handler_24:
+    
+    addi sp, sp, -40*4
+    sw ra, 0*4(sp)
+    jal ra, _start_trap
+    /*push context to stack*/
+    add s2 , ra, zero 
+    jal ra, FROM_CPU_INTR3_handler
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/
