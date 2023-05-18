@@ -545,138 +545,138 @@ abort:
 
 _vector_table:
 "#,
-    #[cfg(not(int_0))]
+    #[cfg(not(feature = "int_0"))]
     r#"j _default_handler"#,
-    #[cfg(int_0)]
+    #[cfg(feature = "int_0")]
     r#"j _handler_0"#,
-    #[cfg(not(int_1))]
+    #[cfg(not(feature = "int_1"))]
     r#"j _default_handler"#,
-    #[cfg(int_1)]
+    #[cfg(feature = "int_1")]
     r#"j _handler_1"#,
-    #[cfg(not(int_2))]
+    #[cfg(not(feature = "int_2"))]
     r#"j _default_handler"#,
-    #[cfg(int_2)]
+    #[cfg(feature = "int_2")]
     r#"j _handler_2"#,
-    #[cfg(not(int_3))]
+    #[cfg(not(feature = "int_3"))]
     r#"j _default_handler"#,
-    #[cfg(int_3)]
+    #[cfg(feature = "int_3")]
     r#"j _handler_3"#,
-    #[cfg(not(int_4))]
+    #[cfg(not(feature = "int_4"))]
     r#"j _default_handler"#,
-    #[cfg(int_4)]
+    #[cfg(feature = "int_4")]
     r#"j _handler_4"#,
-    #[cfg(not(int_5))]
+    #[cfg(not(feature = "int_5"))]
     r#"j _default_handler"#,
-    #[cfg(int_5)]
+    #[cfg(feature = "int_5")]
     r#"j _handler_5"#,
-    #[cfg(not(int_6))]
+    #[cfg(not(feature = "int_6"))]
     r#"j _default_handler"#,
-    #[cfg(int_6)]
+    #[cfg(feature = "int_6")]
     r#"j _handler_6"#,
-    #[cfg(not(int_7))]
+    #[cfg(not(feature = "int_7"))]
     r#"j _default_handler"#,
-    #[cfg(int_7)]
+    #[cfg(feature = "int_7")]
     r#"j _handler_7"#,
-    #[cfg(not(int_8))]
+    #[cfg(not(feature = "int_8"))]
     r#"j _default_handler"#,
-    #[cfg(int_8)]
+    #[cfg(feature = "int_8")]
     r#"j _handler_8"#,
-    #[cfg(not(int_9))]
+    #[cfg(not(feature = "int_9"))]
     r#"j _default_handler"#,
-    #[cfg(int_9)]
+    #[cfg(feature = "int_9")]
     r#"j _handler_9"#,
-    #[cfg(not(int_10))]
+    #[cfg(not(feature = "int_10"))]
     r#"j _default_handler"#,
-    #[cfg(int_10)]
+    #[cfg(feature = "int_10")]
     r#"j _handler_10"#,
-    #[cfg(not(int_11))]
+    #[cfg(not(feature = "int_11"))]
     r#"j _default_handler"#,
-    #[cfg(int_11)]
+    #[cfg(feature = "int_11")]
     r#"j _handler_11"#,
-    #[cfg(not(int_12))]
+    #[cfg(not(feature = "int_12"))]
     r#"j _default_handler"#,
-    #[cfg(int_12)]
+    #[cfg(feature = "int_12")]
     r#"j _handler_12"#,
-    #[cfg(not(int_13))]
+    #[cfg(not(feature = "int_13"))]
     r#"j _default_handler"#,
-    #[cfg(int_13)]
+    #[cfg(feature = "int_13")]
     r#"j _handler_13"#,
-    #[cfg(not(int_14))]
+    #[cfg(not(feature = "int_14"))]
     r#"j _default_handler"#,
-    #[cfg(int_14)]
+    #[cfg(feature = "int_14")]
     r#"j _handler_14"#,
-    #[cfg(not(int_15))]
+    #[cfg(not(feature = "int_15"))]
     r#"j _default_handler"#,
-    #[cfg(int_15)]
+    #[cfg(feature = "int_15")]
     r#"j _handler_15"#,
-    #[cfg(not(int_16))]
+    #[cfg(not(feature = "int_16"))]
     r#"j _default_handler"#,
-    #[cfg(int_16)]
+    #[cfg(feature = "int_16")]
     r#"j _handler_16"#,
-    #[cfg(not(int_17))]
+    #[cfg(not(feature = "int_17"))]
     r#"j _default_handler"#,
-    #[cfg(int_17)]
+    #[cfg(feature = "int_17")]
     r#"j _handler_17"#,
-    #[cfg(not(int_18))]
+    #[cfg(not(feature = "int_18"))]
     r#"j _default_handler"#,
-    #[cfg(int_18)]
+    #[cfg(feature = "int_18")]
     r#"j _handler_18"#,
-    #[cfg(not(int_19))]
+    #[cfg(not(feature = "int_19"))]
     r#"j _default_handler"#,
-    #[cfg(int_19)]
+    #[cfg(feature = "int_19")]
     r#"j _handler_19"#,
-    #[cfg(not(int_20))]
+    #[cfg(not(feature = "int_20"))]
     r#"j _default_handler"#,
-    #[cfg(int_20)]
+    #[cfg(feature = "int_20")]
     r#"j _handler_20"#,
-    #[cfg(not(int_21))]
+    #[cfg(not(feature = "int_21"))]
     r#"j _default_handler"#,
-    #[cfg(int_21)]
+    #[cfg(feature = "int_21")]
     r#"j _handler_21"#,
-    #[cfg(not(int_22))]
+    #[cfg(not(feature = "int_22"))]
     r#"j _default_handler"#,
-    #[cfg(int_22)]
+    #[cfg(feature = "int_22")]
     r#"j _handler_22"#,
-    #[cfg(not(int_23))]
+    #[cfg(not(feature = "int_23"))]
     r#"j _default_handler"#,
-    #[cfg(int_23)]
+    #[cfg(feature = "int_23")]
     r#"j _handler_23"#,
-    #[cfg(not(int_24))]
+    #[cfg(not(feature = "int_24"))]
     r#"j _default_handler"#,
-    #[cfg(int_24)]
+    #[cfg(feature = "int_24")]
     r#"j _handler_24"#,
-    #[cfg(not(int_25))]
+    #[cfg(not(feature = "int_25"))]
     r#"j _default_handler"#,
-    #[cfg(int_25)]
+    #[cfg(feature = "int_25")]
     r#"j _handler_25"#,
-    #[cfg(not(int_26))]
+    #[cfg(not(feature = "int_26"))]
     r#"j _default_handler"#,
-    #[cfg(int_26)]
+    #[cfg(feature = "int_26")]
     r#"j _handler_26"#,
-    #[cfg(not(int_27))]
+    #[cfg(not(feature = "int_27"))]
     r#"j _default_handler"#,
-    #[cfg(int_27)]
+    #[cfg(feature = "int_27")]
     r#"j _handler_27"#,
-    #[cfg(not(int_28))]
+    #[cfg(not(feature = "int_28"))]
     r#"j _default_handler"#,
-    #[cfg(int_28)]
+    #[cfg(feature = "int_28")]
     r#"j _handler_28"#,
-    #[cfg(not(int_29))]
+    #[cfg(not(feature = "int_29"))]
     r#"j _default_handler"#,
-    #[cfg(int_29)]
+    #[cfg(feature = "int_29")]
     r#"j _handler_29"#,
-    #[cfg(not(int_30))]
+    #[cfg(not(feature = "int_30"))]
     r#"j _default_handler"#,
-    #[cfg(int_30)]
+    #[cfg(feature = "int_30")]
     r#"j _handler_30"#,
-    #[cfg(not(int_31))]
+    #[cfg(not(feature = "int_31"))]
     r#"j _default_handler"#,
-    #[cfg(int_31)]
+    #[cfg(feature = "int_31")]
     r#"j _handler_31"#,
 r#"
 .option pop
 "#,
-    #[cfg(int_0)]
+    #[cfg(feature = "int_0")]
     r#"_handler_0:
     
     addi sp, sp, -40*4
@@ -688,7 +688,7 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(int_1)]
+    #[cfg(feature = "int_1")]
     r#"_handler_1:
     
     addi sp, sp, -40*4
@@ -700,7 +700,7 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(int_2)]
+    #[cfg(feature = "int_2")]
     r#"_handler_2:
         
     addi sp, sp, -40*4
@@ -712,7 +712,7 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(int_3)]
+    #[cfg(feature = "int_3")]
     r#"_handler_3:
     
     addi sp, sp, -40*4
@@ -724,7 +724,7 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(int_4)]
+    #[cfg(feature = "int_4")]
     r#"_handler_4:
     
     addi sp, sp, -40*4
@@ -736,7 +736,7 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(int_5)]
+    #[cfg(feature = "int_5")]
     r#"_handler_5:
     
     addi sp, sp, -40*4
@@ -748,7 +748,7 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(int_6)]
+    #[cfg(feature = "int_6")]
     r#"_handler_6:
     
     addi sp, sp, -40*4
@@ -760,7 +760,7 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(int_7)]
+    #[cfg(feature = "int_7")]
     r#"_handler_7:
     
     addi sp, sp, -40*4
@@ -772,7 +772,7 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(int_8)]
+    #[cfg(feature = "int_8")]
     r#"_handler_8:
     
     addi sp, sp, -40*4
@@ -784,7 +784,7 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(int_9)]
+    #[cfg(feature = "int_9")]
     r#"_handler_9:
     
     addi sp, sp, -40*4
@@ -796,7 +796,7 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(int_10)]
+    #[cfg(feature = "int_10")]
     r#"_handler_3:
     
     addi sp, sp, -40*4
@@ -808,7 +808,7 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(int_11)]
+    #[cfg(feature = "int_11")]
     r#"_handler_11:
     
     addi sp, sp, -40*4
@@ -820,7 +820,7 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(int_12)]
+    #[cfg(feature = "int_12")]
     r#"_handler_12:
     
     addi sp, sp, -40*4
@@ -832,7 +832,7 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(int_13)]
+    #[cfg(feature = "int_13")]
     r#"_handler_13:
     
     addi sp, sp, -40*4
@@ -844,7 +844,7 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(int_14)]
+    #[cfg(feature = "int_14")]
     r#"_handler_14:
     
     addi sp, sp, -40*4
@@ -856,7 +856,7 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(int_15)]
+    #[cfg(feature = "int_15")]
     r#"_handler_15:
     
     addi sp, sp, -40*4
@@ -868,7 +868,7 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(int_16)]
+    #[cfg(feature = "int_16")]
     r#"_handler_16:
     
     addi sp, sp, -40*4
@@ -880,7 +880,7 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(int_17)]
+    #[cfg(feature = "int_17")]
     r#"_handler_17:
     
     addi sp, sp, -40*4
@@ -892,7 +892,7 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(int_18)]
+    #[cfg(feature = "int_18")]
     r#"_handler_18:
     
     addi sp, sp, -40*4
@@ -904,7 +904,7 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(int_19)]
+    #[cfg(feature = "int_19")]
     r#"_handler_19:
     
     addi sp, sp, -40*4
@@ -916,7 +916,7 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(int_20)]
+    #[cfg(feature = "int_20")]
     r#"_handler_20:
     
     addi sp, sp, -40*4
@@ -928,7 +928,7 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(int_21)]
+    #[cfg(feature = "int_21")]
     r#"_handler_21:
     
     addi sp, sp, -40*4
@@ -940,7 +940,7 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(int_22)]
+    #[cfg(feature = "int_22")]
     r#"_handler_22:
     
     addi sp, sp, -40*4
@@ -952,7 +952,7 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(int_23)]
+    #[cfg(feature = "int_23")]
     r#"_handler_23:
     
     addi sp, sp, -40*4
@@ -964,7 +964,7 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(int_24)]
+    #[cfg(feature = "int_24")]
     r#"_handler_24:
     
     addi sp, sp, -40*4
@@ -976,7 +976,7 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(int_25)]
+    #[cfg(feature = "int_25")]
     r#"_handler_25:
     
     addi sp, sp, -40*4
@@ -988,7 +988,7 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(int_26)]
+    #[cfg(feature = "int_26")]
     r#"_handler_26:
     
     addi sp, sp, -40*4
@@ -1000,7 +1000,7 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(int_27)]
+    #[cfg(feature = "int_27")]
     r#"_handler_27:
     
     addi sp, sp, -40*4
@@ -1012,7 +1012,7 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(int_28)]
+    #[cfg(feature = "int_28")]
     r#"_handler_28:
     
     addi sp, sp, -40*4
@@ -1024,7 +1024,7 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(int_29)]
+    #[cfg(feature = "int_29")]
     r#"_handler_29:
     
     addi sp, sp, -40*4
@@ -1036,7 +1036,7 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(int_30)]
+    #[cfg(feature = "int_30")]
     r#"_handler_30:
     
     addi sp, sp, -40*4
@@ -1048,7 +1048,7 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(int_31)]
+    #[cfg(feature = "int_31")]
     r#"_handler_31:
     
     addi sp, sp, -40*4
