@@ -10,7 +10,7 @@ keywords     = ["esp32", "riscv", "runtime", "startup"]
 categories   = ["embedded", "no-std"]
 
 [dependencies]
-riscv           = {path = "/home/pawel/suckless/riscv"}
+riscv           = "0.10.1"
 riscv-rt-macros = "0.2.0"
 
 [dev-dependencies]
