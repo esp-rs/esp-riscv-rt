@@ -15,6 +15,7 @@
 
 // NOTE: Adapted from riscv-rt/src/lib.rs
 #![no_std]
+#![feature(linkage)]
 
 use core::arch::global_asm;
 
@@ -545,138 +546,41 @@ abort:
 
 _vector_table:
 "#,
-    #[cfg(not(feature = "int_0"))]
-    r#"j _default_handler"#,
-    #[cfg(feature = "int_0")]
-    r#"j _handler_0"#,
-    #[cfg(not(feature = "int_1"))]
-    r#"j _default_handler"#,
-    #[cfg(feature = "int_1")]
+    r#"j _default_handler"#, //ID 0 is reserved for exceptions, just use default for now to take advantage of atomic emulation
     r#"j _handler_1"#,
-    #[cfg(not(feature = "int_2"))]
-    r#"j _default_handler"#,
-    #[cfg(feature = "int_2")]
     r#"j _handler_2"#,
-    #[cfg(not(feature = "int_3"))]
-    r#"j _default_handler"#,
-    #[cfg(feature = "int_3")]
     r#"j _handler_3"#,
-    #[cfg(not(feature = "int_4"))]
-    r#"j _default_handler"#,
-    #[cfg(feature = "int_4")]
     r#"j _handler_4"#,
-    #[cfg(not(feature = "int_5"))]
-    r#"j _default_handler"#,
-    #[cfg(feature = "int_5")]
     r#"j _handler_5"#,
-    #[cfg(not(feature = "int_6"))]
-    r#"j _default_handler"#,
-    #[cfg(feature = "int_6")]
     r#"j _handler_6"#,
-    #[cfg(not(feature = "int_7"))]
-    r#"j _default_handler"#,
-    #[cfg(feature = "int_7")]
     r#"j _handler_7"#,
-    #[cfg(not(feature = "int_8"))]
-    r#"j _default_handler"#,
-    #[cfg(feature = "int_8")]
     r#"j _handler_8"#,
-    #[cfg(not(feature = "int_9"))]
-    r#"j _default_handler"#,
-    #[cfg(feature = "int_9")]
     r#"j _handler_9"#,
-    #[cfg(not(feature = "int_10"))]
-    r#"j _default_handler"#,
-    #[cfg(feature = "int_10")]
     r#"j _handler_10"#,
-    #[cfg(not(feature = "int_11"))]
-    r#"j _default_handler"#,
-    #[cfg(feature = "int_11")]
     r#"j _handler_11"#,
-    #[cfg(not(feature = "int_12"))]
-    r#"j _default_handler"#,
-    #[cfg(feature = "int_12")]
     r#"j _handler_12"#,
-    #[cfg(not(feature = "int_13"))]
-    r#"j _default_handler"#,
-    #[cfg(feature = "int_13")]
     r#"j _handler_13"#,
-    #[cfg(not(feature = "int_14"))]
-    r#"j _default_handler"#,
-    #[cfg(feature = "int_14")]
     r#"j _handler_14"#,
-    #[cfg(not(feature = "int_15"))]
-    r#"j _default_handler"#,
-    #[cfg(feature = "int_15")]
     r#"j _handler_15"#,
-    #[cfg(not(feature = "int_16"))]
-    r#"j _default_handler"#,
-    #[cfg(feature = "int_16")]
     r#"j _handler_16"#,
-    #[cfg(not(feature = "int_17"))]
-    r#"j _default_handler"#,
-    #[cfg(feature = "int_17")]
     r#"j _handler_17"#,
-    #[cfg(not(feature = "int_18"))]
-    r#"j _default_handler"#,
-    #[cfg(feature = "int_18")]
     r#"j _handler_18"#,
-    #[cfg(not(feature = "int_19"))]
-    r#"j _default_handler"#,
-    #[cfg(feature = "int_19")]
     r#"j _handler_19"#,
-    #[cfg(not(feature = "int_20"))]
-    r#"j _default_handler"#,
-    #[cfg(feature = "int_20")]
     r#"j _handler_20"#,
-    #[cfg(not(feature = "int_21"))]
-    r#"j _default_handler"#,
-    #[cfg(feature = "int_21")]
     r#"j _handler_21"#,
-    #[cfg(not(feature = "int_22"))]
-    r#"j _default_handler"#,
-    #[cfg(feature = "int_22")]
     r#"j _handler_22"#,
-    #[cfg(not(feature = "int_23"))]
-    r#"j _default_handler"#,
-    #[cfg(feature = "int_23")]
     r#"j _handler_23"#,
-    #[cfg(not(feature = "int_24"))]
-    r#"j _default_handler"#,
-    #[cfg(feature = "int_24")]
     r#"j _handler_24"#,
-    #[cfg(not(feature = "int_25"))]
-    r#"j _default_handler"#,
-    #[cfg(feature = "int_25")]
     r#"j _handler_25"#,
-    #[cfg(not(feature = "int_26"))]
-    r#"j _default_handler"#,
-    #[cfg(feature = "int_26")]
     r#"j _handler_26"#,
-    #[cfg(not(feature = "int_27"))]
-    r#"j _default_handler"#,
-    #[cfg(feature = "int_27")]
     r#"j _handler_27"#,
-    #[cfg(not(feature = "int_28"))]
-    r#"j _default_handler"#,
-    #[cfg(feature = "int_28")]
     r#"j _handler_28"#,
-    #[cfg(not(feature = "int_29"))]
-    r#"j _default_handler"#,
-    #[cfg(feature = "int_29")]
     r#"j _handler_29"#,
-    #[cfg(not(feature = "int_30"))]
-    r#"j _default_handler"#,
-    #[cfg(feature = "int_30")]
     r#"j _handler_30"#,
-    #[cfg(not(feature = "int_31"))]
-    r#"j _default_handler"#,
-    #[cfg(feature = "int_31")]
     r#"j _handler_31"#,
 r#"
 .option pop
 "#,
-    #[cfg(feature = "int_0")]
     r#"_handler_0:
     
     addi sp, sp, -40*4
@@ -688,7 +592,6 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(feature = "int_1")]
     r#"_handler_1:
     
     addi sp, sp, -40*4
@@ -700,7 +603,6 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(feature = "int_2")]
     r#"_handler_2:
         
     addi sp, sp, -40*4
@@ -712,7 +614,6 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(feature = "int_3")]
     r#"_handler_3:
     
     addi sp, sp, -40*4
@@ -724,7 +625,6 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(feature = "int_4")]
     r#"_handler_4:
     
     addi sp, sp, -40*4
@@ -736,7 +636,6 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(feature = "int_5")]
     r#"_handler_5:
     
     addi sp, sp, -40*4
@@ -748,7 +647,6 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(feature = "int_6")]
     r#"_handler_6:
     
     addi sp, sp, -40*4
@@ -760,7 +658,6 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(feature = "int_7")]
     r#"_handler_7:
     
     addi sp, sp, -40*4
@@ -772,7 +669,6 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(feature = "int_8")]
     r#"_handler_8:
     
     addi sp, sp, -40*4
@@ -784,7 +680,6 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(feature = "int_9")]
     r#"_handler_9:
     
     addi sp, sp, -40*4
@@ -796,8 +691,7 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(feature = "int_10")]
-    r#"_handler_3:
+    r#"_handler_10:
     
     addi sp, sp, -40*4
     sw ra, 0*4(sp)
@@ -808,7 +702,6 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(feature = "int_11")]
     r#"_handler_11:
     
     addi sp, sp, -40*4
@@ -820,7 +713,6 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(feature = "int_12")]
     r#"_handler_12:
     
     addi sp, sp, -40*4
@@ -832,7 +724,6 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(feature = "int_13")]
     r#"_handler_13:
     
     addi sp, sp, -40*4
@@ -844,7 +735,6 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(feature = "int_14")]
     r#"_handler_14:
     
     addi sp, sp, -40*4
@@ -856,7 +746,6 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(feature = "int_15")]
     r#"_handler_15:
     
     addi sp, sp, -40*4
@@ -868,7 +757,6 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(feature = "int_16")]
     r#"_handler_16:
     
     addi sp, sp, -40*4
@@ -880,7 +768,6 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(feature = "int_17")]
     r#"_handler_17:
     
     addi sp, sp, -40*4
@@ -892,7 +779,6 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(feature = "int_18")]
     r#"_handler_18:
     
     addi sp, sp, -40*4
@@ -904,7 +790,6 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(feature = "int_19")]
     r#"_handler_19:
     
     addi sp, sp, -40*4
@@ -916,7 +801,6 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(feature = "int_20")]
     r#"_handler_20:
     
     addi sp, sp, -40*4
@@ -928,7 +812,6 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(feature = "int_21")]
     r#"_handler_21:
     
     addi sp, sp, -40*4
@@ -940,7 +823,6 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(feature = "int_22")]
     r#"_handler_22:
     
     addi sp, sp, -40*4
@@ -952,7 +834,6 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(feature = "int_23")]
     r#"_handler_23:
     
     addi sp, sp, -40*4
@@ -964,7 +845,6 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(feature = "int_24")]
     r#"_handler_24:
     
     addi sp, sp, -40*4
@@ -976,7 +856,6 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(feature = "int_25")]
     r#"_handler_25:
     
     addi sp, sp, -40*4
@@ -988,7 +867,6 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(feature = "int_26")]
     r#"_handler_26:
     
     addi sp, sp, -40*4
@@ -1000,7 +878,6 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(feature = "int_27")]
     r#"_handler_27:
     
     addi sp, sp, -40*4
@@ -1012,7 +889,6 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(feature = "int_28")]
     r#"_handler_28:
     
     addi sp, sp, -40*4
@@ -1024,7 +900,6 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(feature = "int_29")]
     r#"_handler_29:
     
     addi sp, sp, -40*4
@@ -1036,7 +911,6 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(feature = "int_30")]
     r#"_handler_30:
     
     addi sp, sp, -40*4
@@ -1048,7 +922,6 @@ r#"
     /*preserve return address so we may jump back when needed s2 can be overwritten since weve just pushed everything to stack anyway. */
     jr s2, 0
     /*de-stack context*/"#,
-    #[cfg(feature = "int_31")]
     r#"_handler_31:
     
     addi sp, sp, -40*4
@@ -1071,3 +944,287 @@ _default_handler:
     jr s2, 0
 "#,
 }
+#[export_name = "cpu_int_0_handler"]
+#[linkage = "weak"]
+#[link_section = ".trap"]
+fn hndlr0() {
+    loop{
+        continue; //as default panic spin since no reasonable handler exists
+    }
+}
+#[export_name = "cpu_int_1_handler"]
+#[linkage = "weak"]
+#[link_section = ".trap"]
+fn hndlr1() {
+    loop{
+        continue; //as default panic spin since no reasonable handler exists
+    }
+}
+#[export_name = "cpu_int_2_handler"]
+#[linkage = "weak"]
+#[link_section = ".trap"]
+fn hndlr2() {
+    loop{
+        continue; //as default panic spin since no reasonable handler exists
+    }
+}
+
+#[export_name = "cpu_int_3_handler"]
+#[linkage = "weak"]
+#[link_section = ".trap"]
+fn hndlr3() {
+    loop{
+        continue; //as default panic spin since no reasonable handler exists
+    }
+}
+
+#[export_name = "cpu_int_4_handler"]
+#[linkage = "weak"]
+#[link_section = ".trap"]
+fn hndlr4() {
+    loop{
+        continue; //as default panic spin since no reasonable handler exists
+    }
+}
+
+#[export_name = "cpu_int_5_handler"]
+#[linkage = "weak"]
+#[link_section = ".trap"]
+fn hndlr5() {
+    loop{
+        continue; //as default panic spin since no reasonable handler exists
+    }
+}
+
+#[export_name = "cpu_int_6_handler"]
+#[linkage = "weak"]
+#[link_section = ".trap"]
+fn hndlr6() {
+    loop{
+        continue; //as default panic spin since no reasonable handler exists
+    }
+}
+
+#[export_name = "cpu_int_7_handler"]
+#[linkage = "weak"]
+#[link_section = ".trap"]
+fn hndlr7() {
+    loop{
+        continue; //as default panic spin since no reasonable handler exists
+    }
+}
+
+#[export_name = "cpu_int_8_handler"]
+#[linkage = "weak"]
+#[link_section = ".trap"]
+fn hndlr8() {
+    loop{
+        continue; //as default panic spin since no reasonable handler exists
+    }
+}
+
+#[export_name = "cpu_int_9_handler"]
+#[linkage = "weak"]
+#[link_section = ".trap"]
+fn hndlr9() {
+    loop{
+        continue; //as default panic spin since no reasonable handler exists
+    }
+}
+
+#[export_name = "cpu_int_10_handler"]
+#[linkage = "weak"]
+#[link_section = ".trap"]
+fn hndlr10() {
+    loop{
+        continue; //as default panic spin since no reasonable handler exists
+    }
+}
+
+#[export_name = "cpu_int_11_handler"]
+#[linkage = "weak"]
+#[link_section = ".trap"]
+fn hndlr11() {
+    loop{
+        continue; //as default panic spin since no reasonable handler exists
+    }
+}
+
+#[export_name = "cpu_int_12_handler"]
+#[linkage = "weak"]
+#[link_section = ".trap"]
+fn hndlr12() {
+    loop{
+        continue; //as default panic spin since no reasonable handler exists
+    }
+}
+
+#[export_name = "cpu_int_13_handler"]
+#[linkage = "weak"]
+#[link_section = ".trap"]
+fn hndlr13() {
+    loop{
+        continue; //as default panic spin since no reasonable handler exists
+    }
+}
+
+#[export_name = "cpu_int_14_handler"]
+#[linkage = "weak"]
+#[link_section = ".trap"]
+fn hndlr14() {
+    loop{
+        continue; //as default panic spin since no reasonable handler exists
+    }
+}
+
+#[export_name = "cpu_int_15_handler"]
+#[linkage = "weak"]
+#[link_section = ".trap"]
+fn hndlr15() {
+    loop{
+        continue; //as default panic spin since no reasonable handler exists
+    }
+}
+
+#[export_name = "cpu_int_16_handler"]
+#[linkage = "weak"]
+#[link_section = ".trap"]
+fn hndlr16() {
+    loop{
+        continue; //as default panic spin since no reasonable handler exists
+    }
+}
+#[export_name = "cpu_int_17_handler"]
+#[linkage = "weak"]
+#[link_section = ".trap"]
+fn hndlr17() {
+    loop{
+        continue; //as default panic spin since no reasonable handler exists
+    }
+}
+#[export_name = "cpu_int_18_handler"]
+#[linkage = "weak"]
+#[link_section = ".trap"]
+fn hndlr18() {
+    loop{
+        continue; //as default panic spin since no reasonable handler exists
+    }
+}
+
+#[export_name = "cpu_int_19_handler"]
+#[linkage = "weak"]
+#[link_section = ".trap"]
+fn hndlr19() {
+    loop{
+        continue; //as default panic spin since no reasonable handler exists
+    }
+}
+
+#[export_name = "cpu_int_20_handler"]
+#[linkage = "weak"]
+#[link_section = ".trap"]
+fn hndlr20() {
+    loop{
+        continue; //as default panic spin since no reasonable handler exists
+    }
+}
+
+#[export_name = "cpu_int_21_handler"]
+#[linkage = "weak"]
+#[link_section = ".trap"]
+fn hndlr21() {
+    loop{
+        continue; //as default panic spin since no reasonable handler exists
+    }
+}
+
+#[export_name = "cpu_int_22_handler"]
+#[linkage = "weak"]
+#[link_section = ".trap"]
+fn hndlr22() {
+    loop{
+        continue; //as default panic spin since no reasonable handler exists
+    }
+}
+
+#[export_name = "cpu_int_23_handler"]
+#[linkage = "weak"]
+#[link_section = ".trap"]
+fn hndlr23() {
+    loop{
+        continue; //as default panic spin since no reasonable handler exists
+    }
+}
+
+#[export_name = "cpu_int_24_handler"]
+#[linkage = "weak"]
+#[link_section = ".trap"]
+fn hndlr24() {
+    loop{
+        continue; //as default panic spin since no reasonable handler exists
+    }
+}
+
+#[export_name = "cpu_int_25_handler"]
+#[linkage = "weak"]
+#[link_section = ".trap"]
+fn hndlr25() {
+    loop{
+        continue; //as default panic spin since no reasonable handler exists
+    }
+}
+
+#[export_name = "cpu_int_26_handler"]
+#[linkage = "weak"]
+#[link_section = ".trap"]
+fn hndlr26() {
+    loop{
+        continue; //as default panic spin since no reasonable handler exists
+    }
+}
+
+#[export_name = "cpu_int_27_handler"]
+#[linkage = "weak"]
+#[link_section = ".trap"]
+fn hndlr27() {
+    loop{
+        continue; //as default panic spin since no reasonable handler exists
+    }
+}
+
+#[export_name = "cpu_int_28_handler"]
+#[linkage = "weak"]
+#[link_section = ".trap"]
+fn hndlr28() {
+    loop{
+        continue; //as default panic spin since no reasonable handler exists
+    }
+}
+
+#[export_name = "cpu_int_29_handler"]
+#[linkage = "weak"]
+#[link_section = ".trap"]
+fn hndlr29() {
+    loop{
+        continue; //as default panic spin since no reasonable handler exists
+    }
+}
+
+#[export_name = "cpu_int_30_handler"]
+#[linkage = "weak"]
+#[link_section = ".trap"]
+fn hndlr30() {
+    loop{
+        continue; //as default panic spin since no reasonable handler exists
+    }
+}
+
+#[export_name = "cpu_int_31_handler"]
+#[linkage = "weak"]
+#[link_section = ".trap"]
+fn hndlr31() {
+    loop{
+        continue; //as default panic spin since no reasonable handler exists
+    }
+}
+
