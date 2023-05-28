@@ -607,9 +607,37 @@ abort:
 
 _vector_table:
     j _start_trap
-    .rept 31
-    j _start_trap
-    .endr
+    j _start_trap1
+    j _start_trap2
+    j _start_trap3
+    j _start_trap4
+    j _start_trap5
+    j _start_trap6
+    j _start_trap7
+    j _start_trap8
+    j _start_trap9
+    j _start_trap10
+    j _start_trap11
+    j _start_trap12
+    j _start_trap13
+    j _start_trap14
+    j _start_trap15
+    j _start_trap16
+    j _start_trap17
+    j _start_trap18
+    j _start_trap19
+    j _start_trap20
+    j _start_trap21
+    j _start_trap22
+    j _start_trap23
+    j _start_trap24
+    j _start_trap25
+    j _start_trap26
+    j _start_trap27
+    j _start_trap28
+    j _start_trap29
+    j _start_trap30
+    j _start_trap31
 
 .option pop
 "#,
