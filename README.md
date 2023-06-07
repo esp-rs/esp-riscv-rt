@@ -1,6 +1,11 @@
 # esp-riscv-rt
 
-![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/esp-rs/esp-riscv-rt/ci.yml?label=CI&logo=github&style=flat-square)
+---
+
+## This project has moved! It can now be found in the [esp-rs/esp-hal](https://github.com/esp-rs/esp-hal/tree/main/esp-riscv-rt) mono repository.
+
+---
+
 [![Crates.io](https://img.shields.io/crates/v/esp-riscv-rt?color=C96329&logo=Rust&style=flat-square)](https://crates.io/crates/esp-riscv-rt)
 [![docs.rs](https://img.shields.io/docsrs/esp-riscv-rt?color=C96329&logo=rust&style=flat-square)](https://docs.rs/esp-riscv-rt)
 ![MSRV](https://img.shields.io/badge/MSRV-1.60-blue?style=flat-square)
