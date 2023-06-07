@@ -426,15 +426,78 @@ _abs_start:
     .cfi_endproc
 
 /*
-    Trap entry point (_start_trap)
+    Trap entry points (_start_trap, _start_trapN for N in 1..=31)
 
-    Saves caller saved registers ra, t0..6, a0..7, calls _start_trap_rust,
-    restores caller saved registers and then returns.
+    The default implementation saves all registers to the stack and calls
+    _start_trap_rust, then restores all saved registers before `mret`
 */
 .section .trap, "ax"
-.global default_start_trap
+.weak _start_trap
+.weak _start_trap1
+.weak _start_trap2
+.weak _start_trap3
+.weak _start_trap4
+.weak _start_trap5
+.weak _start_trap6
+.weak _start_trap7
+.weak _start_trap8
+.weak _start_trap9
+.weak _start_trap10
+.weak _start_trap11
+.weak _start_trap12
+.weak _start_trap13
+.weak _start_trap14
+.weak _start_trap15
+.weak _start_trap16
+.weak _start_trap17
+.weak _start_trap18
+.weak _start_trap19
+.weak _start_trap20
+.weak _start_trap21
+.weak _start_trap22
+.weak _start_trap23
+.weak _start_trap24
+.weak _start_trap25
+.weak _start_trap26
+.weak _start_trap27
+.weak _start_trap28
+.weak _start_trap29
+.weak _start_trap30
+.weak _start_trap31
 
-default_start_trap:
+_start_trap1:
+_start_trap2:
+_start_trap3:
+_start_trap4:
+_start_trap5:
+_start_trap6:
+_start_trap7:
+_start_trap8:
+_start_trap9:
+_start_trap10:
+_start_trap11:
+_start_trap12:
+_start_trap13:
+_start_trap14:
+_start_trap15:
+_start_trap16:
+_start_trap17:
+_start_trap18:
+_start_trap19:
+_start_trap20:
+_start_trap21:
+_start_trap22:
+_start_trap23:
+_start_trap24:
+_start_trap25:
+_start_trap26:
+_start_trap27:
+_start_trap28:
+_start_trap29:
+_start_trap30:
+_start_trap31:
+
+_start_trap:
     addi sp, sp, -40*4
 
     sw ra, 0*4(sp)
@@ -534,7 +597,7 @@ abort:
 */
 
 .section .trap, "ax"
-.global _vector_table
+.weak _vector_table
 .type _vector_table, @function
 
 .option push
@@ -544,9 +607,37 @@ abort:
 
 _vector_table:
     j _start_trap
-    .rept 31
-    j _start_trap
-    .endr
+    j _start_trap1
+    j _start_trap2
+    j _start_trap3
+    j _start_trap4
+    j _start_trap5
+    j _start_trap6
+    j _start_trap7
+    j _start_trap8
+    j _start_trap9
+    j _start_trap10
+    j _start_trap11
+    j _start_trap12
+    j _start_trap13
+    j _start_trap14
+    j _start_trap15
+    j _start_trap16
+    j _start_trap17
+    j _start_trap18
+    j _start_trap19
+    j _start_trap20
+    j _start_trap21
+    j _start_trap22
+    j _start_trap23
+    j _start_trap24
+    j _start_trap25
+    j _start_trap26
+    j _start_trap27
+    j _start_trap28
+    j _start_trap29
+    j _start_trap30
+    j _start_trap31
 
 .option pop
 "#,
